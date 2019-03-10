@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+     <script src="https://cdn.bootcss.com/jquery/3.1.0/jquery.js" type="text/javascript"></script>
+    <style type="text/css">
+        *{padding: 0;margin: 0}
+        ul{list-style: none}
+        .clear:after{
+            clear: both;
+            content: '';
+            height: 0;
+            width: 0;
+            display: block;
+        }
+        body{font-size: 13px;color: white}
+        img{height: 300px;vertical-align: top}
+        a{text-decoration: none;color: red;}
+        #wrap{width: 90%;margin: auto}
+        /*头部*/
+        a{margin-left:900px }
+        button{font-size: 16px;background: white;padding: 5px;letter-spacing: 2px;outline: none;border: 0}
+
+        ul>li{float: left}
+        li{padding: 10px}
+        .movie_future{display: none}
+        .movie_pic{position: relative;}
+        .movie_info{position: absolute;top: 0px;left:0px;display: none;background-color:rgba(0,0,0,.5);height: 100%;width: 100%;}
+        .movie_info>p:first-child{padding-top:50px ;}
+        .movie_info>p{padding-left: 20px;padding-top: 6px}
+        .p_title{position: absolute;bottom: 0;padding: 5px}
+        .movie_now>li>p{font-size: 16px;padding: 10px;text-align: center}
+        .movie_future>li>p{font-size: 16px;padding: 10px;text-align: center;}
+
+    </style>
+
+    <script type="text/javascript">
+        $(function () {
+            change_tab();
+            let $img_url = 'https://img.alicdn.com/bao/uploaded/';
+            let $wrap = $('#wrap');
+            let $movie_now =$('.movie_now');
+            let $movie_future =$('.movie_future');
+            $.get('http://http://127.0.0.1:5000/', function (result) {
+                for (let obj of result['data']){
+                    if (index<5){
+                        $('.movie_now')
+                        //往热映电影里添加li
+                            .append($('<li>')
+                                //往li里添加class=movie_pic的div
+                                    .append($('<div>').addClass('movie_pic')
+                                    //往创建的div里添加img
+                                        .append($('<img>').attr('src',$img_url+result.returnValue[index].poster))
+                                        //    往创建的li里添加class="movie_info"的div
+                                        .append($('<div>').addClass('movie_info')
+                                            //向创建的div里添加p
+                                                .append($('<p>').text('导演:'+result.returnValue[index].director))
+                                                .append($('<p>').text('主演:'+result.returnValue[index].leadingRole))
+                                                .append($('<p>').text('类型:'+result.returnValue[index].type))
+                                                .append($('<p>').text('地区:'+result.returnValue[index].country))
+                                                .append($('<p>').text('语言:'+result.returnValue[index].language))
+                                                .append($('<p>').text('片长:'+result.returnValue[index].duration))
+                                        )
+                                        .append($('<p>').text(result.returnValue[index].showName).addClass('p_title')))
+                                .append($('<p>').text('选座购票').css('background','red'))
+                            );
+                    }else {
+                        $('.movie_future')
+                        //往即将上映电影里添加li
+                            .append($('<li>')
+                                //往li里添加class=movie_pic的div
+                                    .append($('<div>').addClass('movie_pic')
+                                    //往创建的div里添加img
+                                        .append($('<img>').attr('src',$img_url+result.returnValue[index].poster))
+                                        //    往创建的li里添加class="movie_info"的div
+                                        .append($('<div>').addClass('movie_info')
+                                            //向创建的div里添加p
+                                                .append($('<p>').text('导演'+result.returnValue[index].director))
+                                                .append($('<p>').text('主演'+result.returnValue[index].leadingRole))
+                                                .append($('<p>').text('类型'+result.returnValue[index].type))
+                                                .append($('<p>').text('地区'+result.returnValue[index].country))
+                                                .append($('<p>').text('语言'+result.returnValue[index].language))
+                                                .append($('<p>').text('片场'+result.returnValue[index].duration))
+                                        )
+                                        .append($('<p>').text(result.returnValue[index].showName).addClass('p_title')))
+                                .append($('<p>').text('上映时间'+result.returnValue[index].openTime).css('color','black'))
+                            );
+                    }
+
+                }
+                show_tab_content()
+            });
+        });
+
+        function show_tab_content(){
+            $('.movie_pic').mouseover(function () {
+                $(this).find($('.movie_info')).stop().slideDown('fast')
+            });
+            $('.movie_pic').mouseout(function () {
+                $(this).find($('.movie_info')).stop().slideUp('fast')
+            });
+        }
+
+        function change_tab(){
+            $('.btn_now').click(function () {
+                $('.movie_now').show();
+                $('.movie_future').hide();
+                $('.btn_future').css('border-bottom','0')
+                $(this).css('border-bottom','2px solid red')
+
+            });
+            $('.btn_future').click(function () {
+                $('.movie_future').show();
+                $('.movie_now').hide();
+                $('.btn_now').css('border-bottom','0')
+                $(this).css('border-bottom','2px solid red')
+            });
+        }
+
+
+    </script>
+</head>
+<body>
+<div id="wrap">
+    <!--头部-->
+    <div id="title">
+        <button class="btn_now">正在热映</button>
+        <button class="btn_future">即将上映</button>
+        <a href="https://dianying.taobao.com/showList.htm" target="_blank">查看全部</a>
+    </div>
+    <hr>
+    <!--电影图片-->
+    <ul class='movie_now clear'>
+
+    </ul>
+    <ul class='movie_future clear'>
+
+    </ul>
+</div>
+</body>
+</html>

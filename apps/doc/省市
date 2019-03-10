@@ -1,0 +1,25 @@
+表名 area
+id
+parent_id 0
+省市区县的名称 name
+全拼 py
+首字母   first
+纬度 lat
+经度 lng
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

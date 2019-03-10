@@ -1,0 +1,8 @@
+id      主键
+image    图片的地址
+detail_url  点击详情
+desc  说明
+sort
+create_date
+is_delete
+

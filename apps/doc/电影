@@ -1,0 +1,23 @@
+
+主键
+name  电影名称
+name_en  英文名字
+movie_type  电影类型
+director  导演
+image    海报
+actor   主演
+country  地区
+duration  片场
+language  语言
+desc        介绍
+release_date  上映时间
+status    状态(1 热映,2 即将上映)
+play_type  播放类型(2D 3D 4D 3DMAX )
+score    评分
+create_date 创建时间
+is_delete
+
+
+
+
+
